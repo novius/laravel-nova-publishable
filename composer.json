@@ -39,7 +39,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Novius\\LaravelNovaNews\\LaravelNovaPublishableServiceProvider"
+                "Novius\\LaravelNovaPublishable\\LaravelNovaPublishableServiceProvider"
             ]
         }
     },
