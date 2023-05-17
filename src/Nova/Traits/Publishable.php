@@ -28,7 +28,7 @@ trait Publishable
     protected function publishableDisplayFields(): array
     {
         return [
-            Badge::make(trans('laravel-nova-news::crud-post.publication_status'), function () {
+            Badge::make(trans('laravel-nova-publishable::fields.publication_status'), function () {
                 /** @var \Novius\LaravelPublishable\Traits\Publishable $this */
                 if ($this->isPublished()) {
                     return 'success';
