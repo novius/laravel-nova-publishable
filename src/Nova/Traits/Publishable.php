@@ -21,7 +21,7 @@ trait Publishable
     {
         return [
             ...$this->publishableDisplayFields(),
-            ...$this->publishableEditFields(),
+            ...$this->publishableFormFields(),
         ];
     }
 
@@ -50,7 +50,7 @@ trait Publishable
         ];
     }
 
-    protected function publishableEditFields(): array
+    protected function publishableFormFields(): array
     {
         return [
             Select::make(trans('laravel-nova-publishable::fields.publication_status'), $this->resource->getPublicationStatusColumn())
