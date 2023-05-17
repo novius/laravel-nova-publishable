@@ -21,7 +21,7 @@ class LaravelNovaPublishableServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'laravel-nova-publishable');
 
         $this->publishes([
-            __DIR__.'/../lang' => lang_path('vendor/laravel-nova-page-manager'),
+            __DIR__.'/../lang' => lang_path('vendor/laravel-nova-publishable'),
         ], 'lang');
     }
 }
