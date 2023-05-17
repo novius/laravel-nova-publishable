@@ -7,7 +7,7 @@ use Novius\LaravelPublishable\Traits\Publishable;
 
 class PublicationBadge extends Badge
 {
-    public function __construct($name, callable $resolveCallback = null)
+    public function __construct($name, $attribute = null, callable $resolveCallback = null)
     {
         parent::__construct($name, function () {
             /** @var Publishable $this */
@@ -29,10 +29,5 @@ class PublicationBadge extends Badge
             ->label(function () {
                 return $this->resource->publicationLabel();
             });
-    }
-
-    public static function make(mixed $name, ?callable $resolveCallback = null): PublicationBadge|static
-    {
-        return new static($name, $resolveCallback);
     }
 }
