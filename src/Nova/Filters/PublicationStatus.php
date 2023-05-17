@@ -31,11 +31,11 @@ class PublicationStatus extends Filter
     public function options(NovaRequest $request)
     {
         return [
-            trans('laravel-nova-publishable::filters.published') => 'published',
-            trans('laravel-nova-publishable::filters.will_be_published') => 'will-be-published',
-            trans('laravel-nova-publishable::filters.unpublished') => 'unpublished',
-            trans('laravel-nova-publishable::filters.drafted') => 'drafted',
-            trans('laravel-nova-publishable::filters.expired') => 'expired',
+            trans('laravel-nova-publishable::messages.filters.published') => 'published',
+            trans('laravel-nova-publishable::messages.filters.will_be_published') => 'will-be-published',
+            trans('laravel-nova-publishable::messages.filters.unpublished') => 'unpublished',
+            trans('laravel-nova-publishable::messages.filters.drafted') => 'drafted',
+            trans('laravel-nova-publishable::messages.filters.expired') => 'expired',
         ];
     }
 }

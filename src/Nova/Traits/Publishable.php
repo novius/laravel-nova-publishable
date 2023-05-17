@@ -28,7 +28,7 @@ trait Publishable
     protected function publishableDisplayFields(): array
     {
         return [
-            Badge::make(trans('laravel-nova-publishable::fields.publication_status'), function () {
+            Badge::make(trans('laravel-nova-publishable::messages.fields.publication_status'), function () {
                 /** @var \Novius\LaravelPublishable\Traits\Publishable $this */
                 if ($this->isPublished()) {
                     return 'success';
@@ -53,7 +53,7 @@ trait Publishable
     protected function publishableFormFields(): array
     {
         return [
-            Select::make(trans('laravel-nova-publishable::fields.publication_status'), $this->resource->getPublicationStatusColumn())
+            Select::make(trans('laravel-nova-publishable::messages.fields.publication_status'), $this->resource->getPublicationStatusColumn())
                 ->options([
                     PublicationStatus::draft->value => PublicationStatus::draft->getLabel(),
                     PublicationStatus::published->value => PublicationStatus::published->getLabel(),
@@ -62,7 +62,7 @@ trait Publishable
                 ->displayUsingLabels()
                 ->onlyOnForms(),
 
-            DateTime::make(trans('laravel-nova-publishable::fields.published_first_at'), $this->resource->getPublishedFirstAtColumn())
+            DateTime::make(trans('laravel-nova-publishable::messages.fields.published_first_at'), $this->resource->getPublishedFirstAtColumn())
                 ->hideWhenCreating()
                 ->hideWhenUpdating(function (NovaRequest $request, Model $article) {
                     return ! $article->{$this->resource->getPublishedFirstAtColumn()};
@@ -85,7 +85,7 @@ trait Publishable
                     return ! $this->isPublished();
                 }),
 
-            DateTime::make(trans('laravel-nova-publishable::fields.published_at'), $this->resource->getPublishedAtColumn())
+            DateTime::make(trans('laravel-nova-publishable::messages.fields.published_at'), $this->resource->getPublishedAtColumn())
                 ->nullable()
                 ->rules('nullable', 'date')
                 ->dependsOn(
@@ -102,7 +102,7 @@ trait Publishable
                 )
                 ->onlyOnForms(),
 
-            DateTime::make(trans('laravel-nova-publishable::fields.expired_at'), $this->resource->getExpiredAtColumn())
+            DateTime::make(trans('laravel-nova-publishable::messages.fields.expired_at'), $this->resource->getExpiredAtColumn())
                 ->nullable()
                 ->rules('nullable', 'date', 'after:'.$this->resource->getPublishedAtColumn())
                 ->dependsOn(
