@@ -4,7 +4,7 @@ return [
     'filters' => [
         'published' => 'Published',
         'will_be_published' => 'Will be published',
-        'unpublished' => 'Not published',
+        'not-published' => 'Not published',
         'drafted' => 'Draft',
         'expired' => 'Expired',
     ],
