@@ -21,10 +21,7 @@
         "novius/laravel-publishable": "dev-main"
     },
     "require-dev": {
-        "laravel/pint": "^1.10",
-        "orchestra/testbench": "^8.5",
-        "pestphp/pest": "^2.5",
-        "pestphp/pest-plugin-laravel": "^2.0"
+        "laravel/pint": "^1.10"
     },
     "autoload": {
         "psr-4": {
