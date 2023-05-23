@@ -28,11 +28,6 @@
             "Novius\\LaravelNovaPublishable\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Novius\\LaravelNovaPublishable\\Tests\\": "tests/"
-        }
-    },
     "extra": {
         "laravel": {
             "providers": [
@@ -59,10 +54,7 @@
         }
     ],
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true
