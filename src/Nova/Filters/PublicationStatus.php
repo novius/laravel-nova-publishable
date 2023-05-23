@@ -15,7 +15,7 @@ class PublicationStatus extends Filter
         if ($value === 'will-be-published') {
             return $query->onlyWillBePublished();
         }
-        if ($value === 'unpublished') {
+        if ($value === 'not-published') {
             return $query->onlyNotPublished();
         }
         if ($value === 'drafted') {
@@ -33,7 +33,7 @@ class PublicationStatus extends Filter
         return [
             trans('laravel-nova-publishable::messages.filters.published') => 'published',
             trans('laravel-nova-publishable::messages.filters.will_be_published') => 'will-be-published',
-            trans('laravel-nova-publishable::messages.filters.unpublished') => 'unpublished',
+            trans('laravel-nova-publishable::messages.filters.not_published') => 'not-published',
             trans('laravel-nova-publishable::messages.filters.drafted') => 'drafted',
             trans('laravel-nova-publishable::messages.filters.expired') => 'expired',
         ];

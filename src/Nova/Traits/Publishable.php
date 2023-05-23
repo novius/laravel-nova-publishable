@@ -38,6 +38,7 @@ trait Publishable
                 trans('laravel-nova-publishable::messages.fields.publication_status'),
                 $this->resource->getPublicationStatusColumn()
             )
+                ->optionsDependsOnPublishedFirstAt($this->resource->getPublishedFirstAtColumn())
                 ->onlyOnForms(),
 
             PublishedFirstAt::make(trans('laravel-nova-publishable::messages.fields.published_first_at'), $this->resource->getPublishedFirstAtColumn())
