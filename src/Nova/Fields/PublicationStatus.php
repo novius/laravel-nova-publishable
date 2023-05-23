@@ -24,7 +24,7 @@ class PublicationStatus extends Select
     public function optionsDependsOnPublishedFirstAt(string $published_first_at_column): PublicationStatus
     {
         return $this->options(function () use ($published_first_at_column) {
-            $status = [
+            $statuses = [
                 PublicationStatusEnum::draft->value => PublicationStatusEnum::draft->getLabel(),
                 PublicationStatusEnum::published->value => PublicationStatusEnum::published->getLabel(),
                 PublicationStatusEnum::unpublished->value => PublicationStatusEnum::unpublished->getLabel(),
@@ -32,10 +32,12 @@ class PublicationStatus extends Select
             ];
 
             if ($this->resource->{$published_first_at_column} !== null) {
-                unset($status[PublicationStatusEnum::draft->value]);
+                unset($statuses[PublicationStatusEnum::draft->value]);
             } else {
-                unset($status[PublicationStatusEnum::unpublished->value]);
+                unset($statuses[PublicationStatusEnum::unpublished->value]);
             }
+
+            return $statuses;
         });
     }
 }
