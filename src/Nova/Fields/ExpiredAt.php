@@ -25,6 +25,7 @@ class ExpiredAt extends DateTime
                 if ($formData->{$publication_status_column} === PublicationStatus::scheduled->value) {
                     $field->show();
                 } else {
+                    $formData->{$field->attribute} = null;
                     $field->hide();
                 }
             }

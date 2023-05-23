@@ -25,7 +25,7 @@ class PublishedAt extends DateTime
                 if ($formData->{$publication_status_column} === PublicationStatus::scheduled->value) {
                     $field->show()->rules(['required', 'date']);
                 } else {
-                    $formData->{$publication_status_column} = null;
+                    $formData->{$field->attribute} = null;
                     $field->hide()->rules('nullable', 'date');
                 }
             }

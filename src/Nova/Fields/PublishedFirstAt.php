@@ -27,7 +27,7 @@ class PublishedFirstAt extends DateTime
         return $this->dependsOn(
             [$publication_status_column],
             function (DateTime $field, NovaRequest $request, FormData $formData) use ($publication_status_column) {
-                if ($formData->{$publication_status_column} === PublicationStatus::draft) {
+                if (in_array($formData->{$publication_status_column}, [PublicationStatus::draft, PublicationStatus::unpublished], true)) {
                     $field->hide();
                 } else {
                     $field->show()->rules(['required', 'date']);
