@@ -9,7 +9,7 @@ This package allows you to manage Laravel Models which user [Laravel Publishable
 ## Requirements
 
 * Laravel Nova >= 4.0
-* Laravel Publishable >= 0.1
+* Laravel Publishable >= 1.0
 * Laravel >= 8.0
 
 ## Installation
