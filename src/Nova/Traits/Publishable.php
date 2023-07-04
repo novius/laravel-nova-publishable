@@ -3,13 +3,11 @@
 namespace Novius\LaravelNovaPublishable\Nova\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Novius\LaravelNovaPublishable\Nova\Fields\ExpiredAt;
 use Novius\LaravelNovaPublishable\Nova\Fields\PublicationBadge;
 use Novius\LaravelNovaPublishable\Nova\Fields\PublicationStatus as PublicationStatusField;
 use Novius\LaravelNovaPublishable\Nova\Fields\PublishedAt;
 use Novius\LaravelNovaPublishable\Nova\Fields\PublishedFirstAt;
-use Novius\LaravelPublishable\Scopes\PublishableScope;
 
 /**
  * @property Model|\Novius\LaravelPublishable\Traits\Publishable $resource
@@ -58,10 +56,5 @@ trait Publishable
                 ->dependsOnPublishedAt($this->resource->getPublishedAtColumn())
                 ->onlyOnForms(),
         ];
-    }
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->withNotPublished(PublishableScope::class);
     }
 }
