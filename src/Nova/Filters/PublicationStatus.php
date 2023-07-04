@@ -10,13 +10,13 @@ class PublicationStatus extends Filter
     public function apply(NovaRequest $request, $query, $value)
     {
         if ($value === 'published') {
-            return $query->withoutNotPublished();
+            return $query->published();
         }
         if ($value === 'will-be-published') {
             return $query->onlyWillBePublished();
         }
         if ($value === 'not-published') {
-            return $query->onlyNotPublished();
+            return $query->notPublished();
         }
         if ($value === 'drafted') {
             return $query->onlyDrafted();
