@@ -7,11 +7,26 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Novius\LaravelPublishable\Enums\PublicationStatus;
+use Novius\LaravelPublishable\Traits\Publishable;
+use RuntimeException;
 
+/**
+ * @method static static make(mixed $name = null, string|\Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
+ */
 class PublishedFirstAt extends DateTime
 {
-    public function __construct($name, $attribute = null, callable $resolveCallback = null)
+    public function __construct($name = null, $attribute = null, callable $resolveCallback = null)
     {
+        $request = app()->get(NovaRequest::class);
+        $resource = $request->newResource();
+        /** @var Publishable&Model $model */
+        $model = $resource->model();
+        if (! in_array(Publishable::class, class_uses_recursive($model))) {
+            throw new RuntimeException('Resource must use trait Novius\LaravePublishable\Traits\Publishable');
+        }
+        $name = $name ?? trans('laravel-nova-publishable::messages.fields.published_first_at');
+        $attribute = $attribute ?? $model->getPublishedFirstAtColumn();
+
         parent::__construct($name, $attribute, $resolveCallback);
 
         $this->nullable()
@@ -19,20 +34,19 @@ class PublishedFirstAt extends DateTime
             ->hideWhenCreating()
             ->hideWhenUpdating(function (NovaRequest $request, Model $model) {
                 return ! $model->{$this->resource->getPublishedFirstAtColumn()};
-            });
-    }
-
-    public function dependsOnPublicationStatus(string $publication_status_column): PublishedFirstAt
-    {
-        return $this->dependsOn(
-            [$publication_status_column],
-            function (DateTime $field, NovaRequest $request, FormData $formData) use ($publication_status_column) {
-                if (in_array($formData->{$publication_status_column}, [PublicationStatus::draft, PublicationStatus::unpublished], true)) {
-                    $field->hide();
-                } else {
-                    $field->show()->rules(['required', 'date']);
+            })
+            ->hideFromDetail(function (NovaRequest $request, Model $model) {
+                return ! $model->isPublished();
+            })
+            ->dependsOn(
+                [$model->getPublicationStatusColumn()],
+                function (DateTime $field, NovaRequest $request, FormData $formData) use ($model) {
+                    if (in_array($formData->{$model->getPublicationStatusColumn()}, [PublicationStatus::draft, PublicationStatus::unpublished], true)) {
+                        $field->hide();
+                    } else {
+                        $field->show()->rules(['required', 'date']);
+                    }
                 }
-            }
-        );
+            );
     }
 }

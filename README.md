@@ -31,42 +31,23 @@ class Post extends Resource
     use Publishable;
 ```
 
-Then you can insert Publishable fields using this method:
+Then you can insert Publishable fields on your Nova Resource.
+You can also add the Publication Status Filter.
 
 ```php
-    protected function fieldsForIndex(): array
-    {
-        return [
-            ...$this->publishableFields(),
-        ];
-    }
-```
-
-If you want to separate field insertions for Forms and Display:
-
-```php
-    protected function fields(): array
-    {
-        return [
-            // Some others fields
-            
-            ...$this->publishableDisplayFields(),
-
-            // Some others fields
-            
-            ...$this->publishableFormFields(),
-        ];
-    }
-```
-
-You can also add the Publication Status Filter:
-
-```php
-use Laravel\Nova\Resource;
-use Novius\LaravelNovaPublishable\Nova\Filters\PublicationStatus;
-
 class Post extends Resource
 {
+    public function fields(NovaRequest $request): array
+    {
+        return [
+            PublicationBadge::make(), // Only display on not forms
+            PublicationStatusField::make()->onlyOnForms(),
+            PublishedFirstAt::make()->onlyOnForms(),
+            PublishedAt::make()->onlyOnForms(),
+            ExpiredAt::make()->onlyOnForms(),
+        ];
+    }
+
     public function filters(NovaRequest $request): array
     {
         return [
