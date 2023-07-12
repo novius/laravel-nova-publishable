@@ -33,7 +33,7 @@ class PublishedFirstAt extends DateTime
             ->rules('nullable', 'date')
             ->hideWhenCreating()
             ->hideWhenUpdating(function (NovaRequest $request, Model $model) {
-                return ! $model->{$this->resource->getPublishedFirstAtColumn()};
+                return ! $model->{$model->getPublishedFirstAtColumn()};
             })
             ->hideFromDetail(function (NovaRequest $request, Model $model) {
                 return ! $model->isPublished();
@@ -41,10 +41,10 @@ class PublishedFirstAt extends DateTime
             ->dependsOn(
                 [$model->getPublicationStatusColumn()],
                 function (DateTime $field, NovaRequest $request, FormData $formData) use ($model) {
-                    if (in_array($formData->{$model->getPublicationStatusColumn()}, [PublicationStatus::draft, PublicationStatus::unpublished], true)) {
+                    if (in_array($formData->{$model->getPublicationStatusColumn()}, [PublicationStatus::draft->value, PublicationStatus::unpublished->value], true)) {
                         $field->hide();
                     } else {
-                        $field->show()->rules(['required', 'date']);
+                        $field->show();
                     }
                 }
             );

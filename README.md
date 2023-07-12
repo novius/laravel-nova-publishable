@@ -42,7 +42,7 @@ class Post extends Resource
         return [
             PublicationBadge::make(), // Only display on not forms
             PublicationStatusField::make()->onlyOnForms(),
-            PublishedFirstAt::make()->onlyOnForms(),
+            PublishedFirstAt::make()->hideFromIndex(),
             PublishedAt::make()->onlyOnForms(),
             ExpiredAt::make()->onlyOnForms(),
         ];
