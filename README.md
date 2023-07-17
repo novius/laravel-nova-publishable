@@ -1,5 +1,6 @@
 # Laravel Nova Publishable
 
+[![Packagist Release](https://img.shields.io/packagist/v/novius/laravel-publishable.svg?maxAge=1800&style=flat-square)](https://packagist.org/packages/novius/laravel-publishable)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
 ## Introduction 
