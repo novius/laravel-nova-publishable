@@ -57,6 +57,16 @@ class Post extends Resource
     }
 ```
 
+You can use the UpdatePlucationStatus action to mass update the publication status of your models.
+
+```php  
+    public function actions(Request $request): array
+    {
+        return [
+            UpdatePublicationStatus::make(),
+        ];
+    }
+```
 ## Lang files
 
 If you want to customize the lang files, you can publish them with:
