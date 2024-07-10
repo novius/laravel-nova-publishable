@@ -14,7 +14,7 @@ use Novius\LaravelPublishable\Traits\Publishable;
  */
 class PublishedFirstAt extends DateTime
 {
-    public function __construct($name = null, $attribute = null, callable $resolveCallback = null)
+    public function __construct($name = null, $attribute = null, ?callable $resolveCallback = null)
     {
         $name = $name ?? trans('laravel-nova-publishable::messages.fields.published_first_at');
 

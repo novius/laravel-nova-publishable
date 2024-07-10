@@ -14,7 +14,7 @@ use Novius\LaravelPublishable\Traits\Publishable;
  */
 class ExpiredAt extends DateTime
 {
-    public function __construct($name = null, $attribute = null, callable $resolveCallback = null)
+    public function __construct($name = null, $attribute = null, ?callable $resolveCallback = null)
     {
         $name = $name ?? trans('laravel-nova-publishable::messages.fields.expired_at');
 
