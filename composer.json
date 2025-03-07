@@ -42,7 +42,7 @@
             "./vendor/bin/pint -v"
         ],
         "lint": [
-            "@composer fmt -- --test"
+            "@composer cs-fix -- --test"
         ],
         "phpstan": [
             "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G"
