@@ -2,18 +2,25 @@
 
 namespace Novius\LaravelNovaPublishable\Nova\Fields;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Novius\LaravelPublishable\Enums\PublicationStatus;
 use Novius\LaravelPublishable\Traits\Publishable;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * @method static static make(mixed $name = null, string|\Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
+ * @method static static make(mixed $name = null, string|Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
  */
 class ExpiredAt extends DateTime
 {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function __construct($name = null, $attribute = null, ?callable $resolveCallback = null)
     {
         $name = $name ?? trans('laravel-nova-publishable::messages.fields.expired_at');
@@ -24,7 +31,7 @@ class ExpiredAt extends DateTime
         $model = $resource->model();
 
         $rules = ['nullable', 'date'];
-        $is_publishable = in_array(Publishable::class, class_uses_recursive($model));
+        $is_publishable = in_array(Publishable::class, class_uses_recursive($model), true);
         if ($is_publishable) {
             $attribute = $attribute ?? $model->getExpiredAtColumn();
             $rules[] = 'after:'.$model->getPublishedAtColumn();

@@ -2,16 +2,25 @@
 
 namespace Novius\LaravelNovaPublishable\Nova\Fields;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Novius\LaravelPublishable\Traits\Publishable;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * @method static static make(mixed $name = null, string|\Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
+ * @method static static make(mixed $name = null, string|Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
  */
 class PublicationBadge extends Badge
 {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     *
+     * @phpstan-ignore constructor.unusedParameter
+     */
     public function __construct($name = null, $attribute = null, ?callable $resolveCallback = null)
     {
         $name = $name ?? trans('laravel-nova-publishable::messages.fields.publication_status');
@@ -21,7 +30,7 @@ class PublicationBadge extends Badge
         /** @var Publishable&Model $model */
         $model = $resource->model();
 
-        $is_publishable = in_array(Publishable::class, class_uses_recursive($model));
+        $is_publishable = in_array(Publishable::class, class_uses_recursive($model), true);
 
         parent::__construct($name, function () use ($is_publishable) {
             if ($is_publishable) {

@@ -2,18 +2,25 @@
 
 namespace Novius\LaravelNovaPublishable\Nova\Fields;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Novius\LaravelPublishable\Enums\PublicationStatus;
 use Novius\LaravelPublishable\Traits\Publishable;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * @method static static make(mixed $name = null, string|\Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
+ * @method static static make(mixed $name = null, string|Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
  */
 class PublishedFirstAt extends DateTime
 {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function __construct($name = null, $attribute = null, ?callable $resolveCallback = null)
     {
         $name = $name ?? trans('laravel-nova-publishable::messages.fields.published_first_at');
@@ -23,7 +30,7 @@ class PublishedFirstAt extends DateTime
         /** @var Publishable&Model $model */
         $model = $resource->model();
 
-        $is_publishable = in_array(Publishable::class, class_uses_recursive($model));
+        $is_publishable = in_array(Publishable::class, class_uses_recursive($model), true);
         if ($is_publishable) {
             $attribute = $attribute ?? $model->getPublishedFirstAtColumn();
         }
@@ -34,6 +41,7 @@ class PublishedFirstAt extends DateTime
             ->rules('nullable', 'date')
             ->hideWhenCreating()
             ->hideWhenUpdating(function (NovaRequest $request, Model $model) use ($is_publishable) {
+                /** @var Publishable&Model $model */
                 if ($is_publishable) {
                     return ! $model->{$model->getPublishedFirstAtColumn()};
                 }
@@ -41,6 +49,7 @@ class PublishedFirstAt extends DateTime
                 return false;
             })
             ->hideFromDetail(function (NovaRequest $request, Model $model) use ($is_publishable) {
+                /** @var Publishable&Model $model */
                 if ($is_publishable) {
                     return ! $model->isPublished();
                 }

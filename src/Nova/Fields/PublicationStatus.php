@@ -2,17 +2,24 @@
 
 namespace Novius\LaravelNovaPublishable\Nova\Fields;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Novius\LaravelPublishable\Enums\PublicationStatus as PublicationStatusEnum;
 use Novius\LaravelPublishable\Traits\Publishable;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * @method static static make(mixed $name = null, string|\Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
+ * @method static static make(mixed $name = null, string|Closure|callable|object|null $attribute = null, callable|null $resolveCallback = null)
  */
 class PublicationStatus extends Select
 {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function __construct($name = null, $attribute = null, ?callable $resolveCallback = null)
     {
         $name = $name ?? trans('laravel-nova-publishable::messages.fields.publication_status');
@@ -22,7 +29,7 @@ class PublicationStatus extends Select
         /** @var Publishable&Model $model */
         $model = $resource->model();
 
-        $is_publishable = in_array(Publishable::class, class_uses_recursive($model));
+        $is_publishable = in_array(Publishable::class, class_uses_recursive($model), true);
         if ($is_publishable) {
             $attribute = $attribute ?? $model->getPublicationStatusColumn();
         }

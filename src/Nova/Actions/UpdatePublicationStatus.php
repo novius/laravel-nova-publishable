@@ -13,23 +13,19 @@ class UpdatePublicationStatus extends Action
 {
     /**
      * Perform the action on the given models.
-     *
-     * @return mixed
      */
     public function handle(ActionFields $fields, Collection $models): void
     {
         foreach ($models as $model) {
-            $model->publication_status = $fields->publication_status;
+            $model->publication_status = $fields->get('publication_status');
             $model->save();
         }
     }
 
     /**
      * Get the fields available on the action.
-     *
-     * @return array
      */
-    public function fields(NovaRequest $request)
+    public function fields(NovaRequest $request): array
     {
         return [
             Select::make('Statut', 'publication_status')
